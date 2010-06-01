@@ -1,0 +1,1158 @@
+/* Default 2.0 created by Jake Stanley and James Mortemore */
+* {
+	padding: 0;
+	margin: 0;
+	font-size: 1em;
+}
+body {
+	font: 8pt sans-serif;
+	background: #f5f5f5;
+	margin: 0;
+	padding: 0;
+	text-align: center;
+	color: #383838;
+}
+tbody {
+	border-spacing: 0;
+}
+#container {
+	width: 95%;
+	min-width: 75em;
+	background: #FFFFFF;
+	margin: 0 auto;
+	margin-top: 15px;
+	text-align: left;
+	border-left: 1px solid #dddddd;
+	border-right: 1px solid #dddddd;
+}
+.header-left {
+	background: #000000 url(images/header_bg.png) repeat-x;
+	display: block;
+	padding-left: 20px;
+	margin: 0;
+	overflow: hidden;
+}
+.header-right {
+	background: #000000 url(images/header_bg.png) repeat-x;
+	display: block;
+	margin: 0;
+}
+.header {
+	background: #000000 url(images/header_bg.png) repeat-x center top;
+	display: block;
+	margin-right: 20px;
+}
+#header h1 {
+	margin: 0;
+	padding: 10px 0;
+}
+#sidebar1 {
+	float: left;
+	width: 20em;
+	max-width: 20em;
+	color: #373737;
+	padding: 14px 0;
+	margin-left: 12px;
+	padding-top: 23px;
+}
+#sidebar2 {
+	float: right;
+	width: 20em;
+	max-width: 20em;
+	color: #373737;
+	padding: 14px 0;
+	margin-right: 12px;
+	padding-top: 23px;
+}
+#sidebar1 p, #sidebar1 h3, #sidebar2 p, #sidebar2 h3 {
+	margin-left: 10px;
+	margin-right: 10px;
+}
+#mainContent {
+	margin: 0 22em;
+	color: #383838;
+	padding-top: 10px;
+}
+#mainContent-noleft {
+	padding-top: 10px;
+	margin-right: 22em;
+	margin-left: 1em;
+}
+#mainContent-noright {
+	padding-top: 10px;
+	margin-left: 22em;
+	margin-right: 1em;
+}
+#mainContent-nosides {
+	margin-left: 1em;
+	margin-right: 1em;
+}
+.footerbg {
+	background: transparent url(images/footer.png) repeat-x scroll center bottom;
+	margin: 0;
+	padding: 0;
+}
+.footer {
+	background: transparent;
+	padding:5px 5px 5px 5px;
+	margin: 0;
+	color: #383838;
+	text-align: center;
+	font: 8pt sans-serif;
+}
+.footer-left {
+	background: transparent url(images/footerbg-left.png) no-repeat scroll left bottom;
+	margin: -3px 0 1px -2px;
+	padding-bottom: 15px;
+}
+.footer-right {
+	background: transparent url(images/footerbg-right.png) no-repeat scroll right bottom;
+	margin: 0 -2px -2px 0;
+	padding: 0;
+}
+.footer a {
+	color: #4f4f4f;
+}
+.clearfloat {
+	clear:both;
+	height: 0;
+	font-size: 1px;
+	line-height: 0px;
+}
+a:link {
+	color: #4f4f4f;
+	text-decoration: none;
+}
+a:visited {
+	color: #4f4f4f;
+	text-decoration: none;
+}
+a:active {
+	color: #4f4f4f;
+	text-decoration: none;
+}
+a:hover {
+	color: #5f5f5f;
+	text-decoration: none;
+}
+a img {
+	border: 0pt none;
+}
+input {
+	border: 1px solid #d7d7d7;
+	background: #f5f5f5 url(images/inputbg.png) repeat-x scroll center top;
+	color: #383838;
+	font-family: sans-serif;
+}
+input[type="reset"], input[type="button"], input[type="submit"] {
+	background: transparent url(images/buttonbg.png) repeat-x;
+	font: 10pt sans-serif;
+	color: #fff;
+	padding-top: 1px;
+	padding-bottom: 1px;
+	padding-left: 5px;
+	padding-right: 5px;
+	border: 1px solid #016aae;
+	margin-left: 2px;
+	margin-right: 2px;
+	margin-top: 2px;
+}
+textarea {
+	background: #f5f5f5;
+	color: #383838;
+	border: 1px solid #d7d7d7;
+	font: 10pt sans-serif;
+}
+.titlebg-left {
+	background: transparent url(images/titlearrow.png) no-repeat scroll left top;
+	padding-left: 15px;
+	margin: 0;
+	display: block;
+	margin-left: -2px;
+}
+.titlebg-right {
+	background: transparent url(images/titlearrowright.png) no-repeat scroll right top;
+	display: block;
+	margin: 0 -2px 0 0;
+}
+.titlebg2 {
+	background : url(images/titlebg.png) repeat-x scroll center top;
+	display: block;
+	color : #e7e7e7;
+	font-size : 12pt;
+	font-family : sans-serif;
+	font-weight: bold;
+	height: 30px;
+	line-height: 30px;
+	padding-left: 7px;
+	margin-right: 14px;
+	position: relative;
+}
+.titlebg {
+	background : url(images/titlebg.png) repeat-x scroll center top;
+	color : #e7e7e7;
+	font-size : 12pt;
+	font-family : sans-serif;
+	font-weight: bold;
+	height: 27px;
+	padding-left: 7px;
+	border-spacing: 0;
+}
+.panelend {
+	padding-bottom: 5px;
+}
+.small-text {
+	font-size:x-small;
+}
+.subtitlebg {
+	font-family: sans-serif;
+	font-size: small;
+	font-weight: bold;
+}
+.topside-l {
+	padding-left : 0;
+}
+.topside-r {
+	padding-right : 0;
+}
+.navbar {
+	background: #00A3F8 url(images/navbar.PNG) repeat-x;
+	width: auto;
+	margin: 0 auto 0;
+	padding: 5px 0 4px 0;
+	border-bottom: 1px solid #006db3;
+	border-left: 1px solid #006db3;
+	border-right: 1px solid #006db3;
+}
+.navbar li {
+	display: inline;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+.navbar ul {
+	margin: 0;
+	padding: 0;
+}
+.navbar ul li {
+	margin: 0;
+	padding: 0;
+}
+.navbar ul li a {
+	color: #fff;
+	font-size: 12px;
+	padding: 9px 20px 9px 20px;
+	text-decoration: none;
+}
+.navbar ul li a:hover {
+	color: #86c1e6;
+}
+.navbar a:active {
+	color: #fff;
+}
+.contentbg {
+	background: transparent url(images/contentbg.png) repeat-x scroll center bottom;
+	position: relative;
+}
+.content {
+	background: #fff url(images/content_bg.png) repeat-x scroll center bottom;
+	padding: 5px;
+	border-left: 1px solid #dddddd;
+	border-right: 1px solid #dddddd;
+	color: #383838;
+	font: 10pt sans-serif;
+}
+.content-left {
+	background: url(images/contentbg-left.png) no-repeat scroll left bottom;
+	margin: -3px 0 1px -2px;
+	padding-bottom: 15px;
+}
+.content-right {
+	background: url(images/contentbg-right.png) no-repeat scroll right bottom;
+	margin: 0 -2px -2px 0;
+	padding: 0;
+}
+.forumCatNone {
+	border: 1px solid #dddddd;
+}
+.imagebutton {
+	background: url(images/button.png) repeat-x;
+	width : 75px;
+	padding : 5px 12px 4px 9px;
+	position: static;
+	font-size: 10pt;
+	color: #e7e7e7;
+	border-left: 1px solid #006db3;
+	border-right: 1px solid #006db3;
+	margin-bottom: 2px;
+}
+.imagebutton a, .imagebuttonwide a {
+	color: #e7e7e7;
+}
+.imagebuttonwide {
+   background: url(images/button.png) repeat-x;
+   width : 100px;
+   padding : 5px 12px 4px 9px;
+   position: static;
+   font-size: 10pt;
+   color: #e7e7e7;
+   border-left: 1px solid #006db3;
+   border-right: 1px solid #006db3;
+   margin-bottom: 2px;
+}
+.imagebutton a:hover, .imagebuttonwide a:hover {
+	color: #fff;
+}
+.bbcode_quote_head {
+	color: #999999;
+	background: #e6e6e6;
+	border-left: 1px solid #bfbfbf;
+	border-top: 1px solid #bfbfbf;
+	border-right: 1px solid #bfbfbf;
+	border-bottom: 1px solid #e1e1e1;
+	font: 8pt sans-serif;
+}
+.bbcode_quote_body {
+	color: #383838;
+	background: #eee url(images/quotebg.png) no-repeat scroll left top;
+	font: 10pt Georgia;
+	font-style: italic;
+	padding-bottom: 5px;
+	padding-left: 15px;
+	padding-right: 5px;
+	border-left: 1px solid #bfbfbf;
+	border-right: 1px solid #bfbfbf;
+	border-bottom: 1px solid #bfbfbf;
+}
+/* Start of admin buttons */
+
+
+
+.adminbutton {
+	background:url(images/admin%20panel%20button.png) no-repeat;
+	width: 204px;
+	height: 50px;
+}
+/* Mouse over admin button */
+
+
+
+.adminbutton:hover {
+	background:url(images/admin%20panel%20buttono.png) no-repeat;
+	width: 204px;
+	height: 50px;
+}
+/* Text admin buttons */
+
+
+
+.adminbutton a {
+	float: left;
+	margin-top: 10px;
+	color:#000000;
+}
+/* Icons admin buttons */
+
+
+
+.adminicon {
+	float: left;
+	margin-left: 15px;
+	border: 0;
+}
+select {
+	background: #f2f2f2;
+	color: #383838;
+	border: 1px solid #d7d7d7;
+}
+option {
+	padding-right: 10px;	
+}
+button:hover {
+	background: #e4e4e4;
+	border: 1px solid #c6c6c6;
+}
+/* -------------------------------------------------------------------
+
+
+
+// MarkItUp!
+
+
+
+// By Jay Salvat - http://markitup.jaysalvat.com/
+
+
+
+// ------------------------------------------------------------------*/
+
+
+
+.markItUp .markItUpButton1 a {
+	background-image:url(images/bold.png);
+}
+.markItUp .markItUpButton2 a {
+	background-image:url(images/italic.png);
+}
+.markItUp .markItUpButton3 a {
+	background-image:url(images/underline.png);
+}
+.markItUp .markItUpButton4 a {
+	background-image:url(images/stroke.png);
+}
+.markItUp .markItUpButton5 a {
+	background-image:url(images/picture.png);
+}
+.markItUp .markItUpButton6 a {
+	background-image:url(images/link.png);
+}
+.markItUp .markItUpButton7 a {
+	background-image:url(images/fonts.png);
+}
+.markItUp .markItUpButton8 a {
+	background-image:url(images/list-bullet.png);
+}
+.markItUp .markItUpButton9 a {
+	background-image:url(images/list-numeric.png);
+}
+.markItUp .markItUpButton10 a {
+	background-image:url(images/list-item.png);
+}
+.markItUp .markItUpButton11 a {
+	background-image:url(images/quotes.png);
+}
+.markItUp .markItUpButton12 a {
+	background-image:url(images/code.png);
+}
+.markItUp .clean a {
+	background-image:url(images/clean.png);
+}
+.markItUp .preview a {
+	background-image:url(images/preview.png);
+}
+/* -------------------------------------------------------------------
+
+
+
+// markItUp! Universal MarkUp Engine, JQuery plugin
+
+
+
+// By Jay Salvat - http://markitup.jaysalvat.com/
+
+
+
+// ------------------------------------------------------------------*/
+
+
+
+.markItUp * {
+	margin:0px;
+	padding:0px;
+	outline:none;
+}
+.markItUp a:link, .markItUp a:visited {
+	color:#7dbded;
+	text-decoration:none;
+}
+.markItUp {
+	margin:5px 0 5px 0;
+}
+.markItUpContainer {
+	padding:5px 5px 2px 5px;
+	font:11px Verdana, Arial, Helvetica, sans-serif;
+}
+.markItUpEditor {
+	padding: 5px 5px 5px 0px;
+	width: 100%;
+	height: 320px;
+	clear: both;
+	display: block;
+	line-height: 18px;
+	overflow: auto;
+}
+.markItUpPreviewFrame {
+	overflow:auto;
+	background-color:#fff;
+	border:1px solid #383838;
+	width:99.9%;
+	height:300px;
+	margin:5px 0;
+	text-align: left;
+}
+.markItUpFooter {
+	width:100%;
+	cursor:n-resize;
+}
+.markItUpResizeHandle {
+	overflow:hidden;
+	width:22px;
+	height:5px;
+	margin-left:auto;
+	margin-right:auto;
+	background-image:url(images/handle.png);
+	cursor:n-resize;
+}
+/***************************************************************************************/
+
+
+
+/* first row of buttons */
+
+
+
+.markItUpHeader ul li {
+	list-style:none;
+	float:left;
+	position:relative;
+}
+.markItUpHeader ul li ul {
+	display:none;
+}
+.markItUpHeader ul li:hover > ul {
+	display:block;
+}
+.markItUpHeader ul .markItUpDropMenu {
+	background:transparent url(images/menu.png) no-repeat 115% 50%;
+	margin-right:5px;
+}
+.markItUpHeader ul .markItUpDropMenu li {
+	margin-right:0px;
+}
+.markItUpHeader ul .markItUpSeparator {
+	margin:0 10px;
+	width:1px;
+	height:16px;
+	overflow:hidden;
+	background-color:#CCC;
+}
+.markItUpHeader ul ul .markItUpSeparator {
+	width:auto;
+	height:1px;
+	margin:0px;
+}
+/* next rows of buttons */
+
+
+
+.markItUpHeader ul ul {
+	display:none;
+	position:absolute;
+	top:18px;
+	left:0px;
+	background:#F5F5F5;
+	border:1px solid #3C769D;
+	height: inherit;
+}
+.markItUpHeader ul ul li {
+	float:none;
+	border-bottom:1px solid #3C769D;
+}
+.markItUpHeader ul ul .markItUpDropMenu {
+	background:#F5F5F5 url(images/submenu.png) no-repeat 100% 50%;
+}
+/* next rows of buttons */
+
+
+
+.markItUpHeader ul ul ul {
+	position:absolute;
+	top:-1px;
+	left:150px;
+}
+.markItUpHeader ul ul ul li {
+	float:none;
+}
+.markItUpHeader ul a {
+	display:block;
+	width:16px;
+	height:16px;
+	text-indent:-10000px;
+	background-repeat:no-repeat;
+	padding:3px;
+	margin:0px;
+}
+.markItUpHeader ul ul a {
+	display:block;
+	padding-left:0px;
+	text-indent:0;
+	width:120px;
+	padding:5px 5px 5px 25px;
+	background-position:2px 50%;
+}
+.markItUpHeader ul ul a:hover {
+	color:#FFF;
+	background-color:#3C769D;
+}
+/***************************************************************************************/
+
+
+
+.bbcode .markItUpEditor {
+	background-image:url(images/bg-editor-bbcode.png);
+}
+.markItUp .colors a {
+	background-image:url(images/colors.png);
+}
+.markItUp .colors ul {
+	width:81px;
+	padding:1px;
+}
+.markItUp .colors li {
+	border:1px solid white;
+	width:25px;
+	height:25px;
+	overflow:hidden;
+	padding:0px;
+	margin:0px;
+	float:left;
+}
+.markItUp .colors ul a {
+	width:25px;
+	height:25px;
+}
+.markItUp .colors ul a:hover {
+	background-color:#181818;
+}
+.markItUp .colors .col1-1 a {
+	background:yellow;
+}
+.markItUp .colors .col1-2 a {
+	background:orange;
+}
+.markItUp .colors .col1-3 a {
+	background:red;
+}
+.markItUp .colors .col2-1 a {
+	background:blue;
+}
+.markItUp .colors .col2-2 a {
+	background:purple;
+}
+.markItUp .colors .col2-3 a {
+	background:green;
+}
+.markItUp .colors .col3-1 a {
+	background:white;
+}
+.markItUp .colors .col3-2 a {
+	background:gray;
+}
+.markItUp .colors .col3-3 a {
+	background:black;
+}
+.error {
+	font-size: 11px;
+	color:#FF0000;
+}
+/*Forum content areas, sticky and regular*/ 
+
+
+
+.topic {
+	background: url(images/topicview.png) repeat-x;
+	color: #383838;
+	font: 10pt sans-serif;
+	padding-top: 1px;
+	padding-bottom: 1px;
+	height: 20px;
+}
+.sticky {
+	background: #0C87CE url(images/stickyview.png) repeat-x;
+	color: #fff;
+	font: 10pt sans-serif;
+	padding-top: 1px;
+	padding-bottom: 1px;
+	height: 20px;
+}
+.topic a {
+	color: #383838;
+}
+.topic a:hover {
+	color: #676767;
+}
+.sticky a {
+	color: #fff;
+}
+.sticky a:hover {
+	color: #86c1e6;
+}
+.html .markItUp .markItUpButton1 a {
+	background-image:url(images/h1.png);
+}
+.html .markItUp .markItUpButton2 a {
+	background-image:url(images/h2.png);
+}
+.html .markItUp .markItUpButton3 a {
+	background-image:url(images/h3.png);
+}
+.html .markItUp .markItUpButton4 a {
+	background-image:url(images/h4.png);
+}
+.html .markItUp .markItUpButton5 a {
+	background-image:url(images/h5.png);
+}
+.html .markItUp .markItUpButton6 a {
+	background-image:url(images/h6.png);
+}
+.html .markItUp .markItUpButton7 a {
+	background-image:url(images/paragraph.png);
+}
+.html .markItUp .markItUpButton8 a {
+	background-image:url(images/bold.png);
+}
+.html .markItUp .markItUpButton9 a {
+	background-image:url(images/italic.png);
+}
+.html .markItUp .markItUpButton10 a {
+	background-image:url(images/stroke.png);
+}
+.html .markItUp .markItUpButton11 a {
+	background-image:url(images/list-bullet.png);
+}
+.html .markItUp .markItUpButton12 a {
+	background-image:url(images/list-numeric.png);
+}
+.html .markItUp .markItUpButton13 a {
+	background-image:url(images/list-item.png);
+}
+.html .markItUp .markItUpButton14 a {
+	background-image:url(images/picture.png);
+}
+.html .markItUp .markItUpButton15 a {
+	background-image:url(images/link.png);
+}
+.html .markItUp .clean a {
+	background-image:url(images/clean.png);
+}
+.html .markItUp .preview a {
+	background-image:url(images/preview.png);
+}
+.help {
+	background: url(images/QuestionMark.png) no-repeat;
+	height: 18px;
+	width: 18px;
+	display: inline-block;
+	cursor: pointer;
+}
+.tooltip {
+	background: #FFFFFF;
+	border:1px dashed #999;
+	color:#333;
+	width: 10%;
+}
+.highlight {
+	background-color: #FF0000;
+}
+.ajax {
+	display:none;
+	font-size: 20pt;
+	text-align:center;
+	background:#000000;
+	font-weight:bold;
+	color: #FFFFFF;
+	left: 0;
+	position:fixed;
+	top: 0;
+	width: 100%;
+	z-index: 10;
+}
+.titlebg a:active {
+	color: #fff;
+}
+.titlebg a:visited {
+	color: #fff;
+}
+.titlebg a:link {
+	color: #fff;
+}
+.titlebg2 a:active {
+	color: #fff;
+}
+.titlebg2 a:visited {
+	color: #fff;
+}
+.titlebg2 a:link {
+	color: #fff;
+}
+ul.bbcode_list li {
+	list-style: circle inside;
+	padding-left: 5px;
+}
+.bbcode_code_head {
+	color: #999999;
+	background: #e6e6e6;
+	font: 8pt sans-serif;
+	border-left: 1px solid #bfbfbf;
+	border-top: 1px solid #bfbfbf;
+	border-right: 1px solid #bfbfbf;
+	border-bottom: 1px solid #e1e1e1;
+}
+.bbcode_code_body {
+	color: #383838;
+	font: 8pt Courier New;
+	background-color: #eee;
+	border-right: 1px solid #bfbfbf;
+	border-left: 1px solid #bfbfbf;
+	border-bottom: 1px solid #bfbfbf;
+	padding-left: 5px;
+}
+.seperator {
+	border-color: #dddddd;
+	border-style: solid none none;
+	border-width: 1px medium medium;
+	width: 100%;
+	margin-bottom: 4px;
+}
+.seperator2 {
+	border-color: #dddddd;
+	border-style: solid none none;
+	border-width: 1px medium medium;
+	width: 100%;
+}
+.pagination {
+	color: #383838;
+	font: 10pt sans-serif;
+	font-weight: bold;
+}
+.forum-board-area {
+	border: 1px solid #d7d7d7;
+}
+.board-area {
+	border: 1px solid #d7d7d7;
+	width: 100%;
+}
+.forum-cat-cell {
+	background: transparent url(images/forumcatbg.png) repeat-x scroll center bottom;
+	border-bottom: 1px solid #006db3;
+	color: #fff;
+	font: 10pt sans-serif;
+	font-weight: bold;
+	height: 20px;
+	padding-left: 15px;
+}
+.forum-board-name-link {
+	font: 11pt sans-serif;
+	color: #383838;
+}
+#profileContactArea {
+	border: 1px solid #d7d7d7;
+}
+.admin-divide {
+	padding-left: 1%;
+}
+.admin-panel {
+	margin-left: auto;
+	margin-right: auto;
+	width: 80%;
+	text-align: center;
+}
+.admin-panel2 {
+	margin-left: auto;
+	margin-right: auto;
+	width: 80%;
+	text-align: center;
+}
+.admin-table {
+	margin-left: auto;
+	margin-right: auto;
+	width: 100%;
+	text-align: center;
+	border-spacing: 0;
+}
+.admin-table2 {
+	margin-left: auto;
+	margin-right: auto;
+	width: 100%;
+	text-align: left;
+	border-spacing: 0;
+}
+.visiblebox {
+	display: none;
+	text-align: left;
+}
+.inline {
+	background: #FFFFCC;
+	color: #383838;
+}
+.inline a {
+	color: #383838;
+}
+#eocmsnews {
+	overflow: auto;
+	height: 100px;
+	text-align: left;
+}
+.admin-area {
+	margin-top: 15px;
+	width: 100%;
+}
+.navbar-admin-top {
+	width: 150px;
+}
+.navbar-admin-top ul {
+	padding-left: 10px;
+	list-style: none;
+}
+.admin-subtitlebg {
+	background: url(images/titlebg.png) repeat-x;
+	font: 10pt sans-serif;
+	font-weight: bold;
+	color: #fff;
+	margin: 2px;
+	height: 22px;
+}
+.admin-subtitlebg a {
+	color: #fff;
+}
+.pagination-right {
+	float: right;
+	width: auto;
+	right: 0;
+	position: absolute;
+}
+#forumHeadRow {
+	background: transparent url(images/forumheadbg.png) repeat-x scroll center bottom;
+}
+.forum-board-row {
+	background: transparent url(images/forumrowbg.png) repeat-x bottom;
+}
+.forum-board-row:hover {
+	background: url(images/forumrowbg2.png) repeat-x bottom;
+}
+#boardArea {
+	border-spacing: 0;
+}
+.home-admin-panel {
+	width: 75%;
+	margin-left: auto;
+	margin-right: auto;
+}
+#update {
+	background: #c7ebc0 url(images/success.png) no-repeat scroll left bottom;
+	border: 2px dashed #55b741;
+	font: 14pt sans-serif;
+	color: #383838;
+	padding-top: 17px;
+	padding-bottom: 15px;
+	display: none;
+}
+.latest-topics {
+	width: 100%;
+	border-spacing: 0;
+}
+.latest-topics tr.subtitlebg {
+	background: transparent url(images/latest-topicsbg.png) repeat-x scroll center bottom;
+	font-weight: bold;
+	font: 12pt sans-serif;
+	border-spacing: 0;
+}
+tr.logo {
+	background: #000 url(images/header_bg.png) repeat-x;
+	width: 100%;
+}
+#maintenance-container {
+	border: none;
+	width: 85%;
+	background: #fff;
+	margin: 0 auto;
+	margin-top: 15px;
+}
+.content-maintenance {
+	width: 100%;
+	border: none;
+	border-spacing: 0;
+}
+.maintenance-message {
+	color: #eee;
+	font: 14pt sans-serif;
+	background: #000;
+	padding: 5px;
+}
+.maintenance-login {
+	color: #fff;
+	background: url(images/loginbg.png) repeat-x;
+	font: 12pt sans-serif;
+	height: 30px;
+}
+#boardPaginate {
+	font: 10pt sans-serif;
+	font-weight: bold;
+}
+.newstable h2 {
+	display: block;
+	padding: 0 5px 3px;
+	color: #1c1c1c;
+}
+.newstable h2 a {
+	color: #1c1c1c;
+}
+.news-author, .news-views, .news-date {
+	display: block;
+	float: left;
+	margin-right: 10px;
+}
+.news-comments {
+	float: right;
+	background: url(images/comments.png) no-repeat;
+	padding-left: 16px;
+}
+.news-views {
+	background: url(images/views.png) no-repeat;
+	padding-left: 16px;
+}
+.news-author {
+	background: url(images/author.png) no-repeat;
+	padding-left: 16px;
+}
+.news-date {
+	background: url(images/date.png) no-repeat;
+	padding-left: 16px;
+}
+.news-clear {
+	clear: both;
+}
+.news-info {
+	margin-left: 5px;
+	margin-right: 5px;
+	margin-bottom: 5px;
+	margin-top: 0px;
+	font: 8pt sans-serif;
+	height: 15px;
+	border-bottom: 1px solid #bababa;
+}
+.newstable {
+	margin-bottom: 5px;
+}
+.news-content {
+	padding-left: 5px;
+	padding-right: 5px;
+	color: #1c1c1c;
+}
+.news-pagination {
+	font: 10pt sans-serif;
+	font-weight: bold;
+}
+.message-comment {
+	height: 100px;
+}
+.post-subject {
+	float: left;
+}
+.post-edit-images {
+	float: right;
+}
+.post-id-area {
+	overflow: hidden;
+	padding-right: 20px;
+	width: 100px;
+}
+.post-last-edit {
+	font-style: italic;
+}
+.trackip-div {
+	font: 8pt sans-serif;
+}
+.post-author-name {
+	font: 12pt sans-serif;
+	font-weight: bold;
+}
+.post-posts-area {
+	font: 8pt sans-serif;
+}
+.posts-area1 {
+	border-bottom: 1px #DDDDDD solid;
+	width: 100%;
+	table-layout: fixed;
+	padding-top: 10px;
+}
+.posts-area2 {
+	background-color: #f6f6f6;
+	border-bottom: 1px #DDDDDD solid;
+	width: 100%;
+	table-layout: fixed;
+	padding-top: 10px;
+}
+.comment-delete {
+	float: right;
+}
+.comment-area1 {
+	background-color: #fff;
+	margin: 2px;
+	border: 1px solid #ababab;
+	padding: 5px;
+}
+.comment-area2 {
+	background-color: #f6f6f6;
+	margin: 2px;
+	border: 1px solid #ababab;
+	padding: 5px;
+}
+.comment-subject {
+	display: block;
+	float: left;
+	font: 8pt sans-serif;
+	border-bottom: 1px solid #ddd;
+	width: 95%;
+}
+.comment-message {
+	font: 12pt sans-serif;
+	display: table;
+}
+.profile-titles {
+	font-weight: bold;
+	float: left;
+	padding-right: 10px;
+}
+.profile-avatar-contact {
+	border-right: 1px #dddddd solid;
+	padding-right: 5px;
+}
+.profile-details-area {
+	padding-left: 20px;
+}
+.profile-username {
+	font-weight: bold;
+}
+.profile-contact-img {
+	padding-left: 4px;
+}
+ul {
+	list-style: none;
+}
+ol {
+	margin-left: 1.12em;	
+}
+.article-author, .article-views, .article-date {
+	display: block;
+	float: left;
+	margin-right: 10px;
+	padding-left: 16px;
+	margin-top: 5px;
+}
+.article-views {
+	background: url(images/views.png) no-repeat;
+}
+.article-author {
+	background: url(images/author.png) no-repeat;
+}
+.article-date {
+	background: url(images/date.png) no-repeat;
+}
+.article-info {
+	margin: 10px 5px 5px;
+	font: 8pt sans-serif;
+	height: 15px;
+	border-top: 1px #B6B6B6 solid;
+}
+.signature-div {
+	font-size: 0.8em;
+}
+#cluetip-close a {
+	font-weight: bold;
+	font-size: 1.2em;
+}
+.post-message-div {
+	line-height: 1.3em;
+	overflow: auto;
+}

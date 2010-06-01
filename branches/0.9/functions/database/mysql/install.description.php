@@ -1,0 +1,10 @@
+<?php
+/*
+MySQL
+mysql_connect
+HOST
+USER
+PASS
+NAME
+*/
+?>
