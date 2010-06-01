@@ -1,0 +1,92 @@
+#container {
+	margin-left: auto;
+	margin-right: auto;
+	width: 960px;
+}
+.menu {
+	width: 100%;
+	height: 65px;
+}
+.menu ul {
+
+}
+.menu ul li {
+	display: inline;
+	float: left;
+}
+.menu ul li a span.outer {
+	display: block;
+}
+.menu ul li a {
+	display:block;
+	float:left;
+	height: 65px;
+	overflow:hidden;
+	text-align:center;
+	text-decoration:none;
+	width:73px;
+}
+.menu ul li a * {
+	cursor:pointer;
+}
+.menu ul li a span.inner {
+	border-right:1px solid #4985B2;
+	background-position:50% 3px;
+	background-repeat: no-repeat;
+	display:block;
+	padding: 45px 10px 0;
+	white-space:nowrap;
+}
+#tabs {
+	width: 100%;
+}
+table.display thead th .ui-icon {
+	float: left;
+}
+fieldset {  
+	clear: left;    
+	width: 100%;    
+	margin: 0 0 1.5em 0;    
+	padding: 0;
+}  
+legend {  
+	margin-left: 1em;  
+	color: #000000;  
+	font-weight: bold;  
+}  
+fieldset ul {  
+	padding: 1em 1em 0 1em;  
+	list-style: none;  
+}  
+fieldset li {  
+	float: left;    
+	clear: left;    
+	width: 100%;    
+	padding-bottom: 1em;
+}  
+fieldset.submit {
+	float: none;    
+	width: auto;    
+	border: 0 none #FFF;    
+	padding-left: 12em;    
+}
+fieldset label {    
+	float: left;    
+	width: 10em;    
+	margin-right: 1em;  
+}
+table label {
+	float: none;
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+}
+table.permissions tbody tr td.yes:hover {
+	background: #66FF66;
+}
+table.permissions tbody tr td.no:hover {
+	background: #FF0000;
+}
+table.permissions tbody tr:hover {
+	background: #FFFFCC;
+}

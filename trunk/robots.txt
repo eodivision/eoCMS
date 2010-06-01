@@ -1,0 +1,14 @@
+User-Agent: *
+Allow: /*?
+Disallow: /cache*
+Disallow: /feeds*
+Disallow: /functions*
+Disallow: /js*
+Disallow: /language*
+Disallow: /panels*
+Disallow: /plugins*
+Disallow: /search*
+Disallow: /index.php?act=login*
+Disallow: /index.php?act=newtopic*
+Disallow: /index.php?act=register*
+Disallow: /index.php?act=reply*

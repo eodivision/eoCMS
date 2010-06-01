@@ -1,0 +1,271 @@
+Adding Database Support to eoCMS
+================================
+       http://eocms.com/
+
+         By Paul Wratt
+           13/03/09
+
+
+CONTENTS:
+- about
+- install
+    install.description.php
+    install.config.php
+    install.test.php
+    install.version.php
+    install.create.php
+    install.help.php
+- sql
+    sql_affected_rows.php
+    sql_create.php
+    sql_error.php
+    sql_fetch_array.php
+    sql_fetch_assoc.php
+    sql_fetch_object.php
+    sql_fetch_row.php
+    sql_insert_id.php
+    sql_num_rows.php
+    sql_query.php
+- notes
+- supported
+    MySql
+    SQLite
+    MSSQL
+    Postgre
+    SQLite3
+
+
+=about================================================================================
+
+
+  This document contains  everything needed for specific  database support to be added 
+to eoCMS.  As of the writing of this document, some parts are still under development, 
+and as such,  the requirements  for supporting  a  database may  change in the future, 
+however as long as your added database support is distributed with eoCMS,  any updates 
+will be automatically done by the maintainers of eoCMS.
+
+  The variable substitutions mentioned below are detailed in "install.description.php" 
+in the folder where this file was opened (which should be _eocms_/functions/database/)
+and are persistent across all required "install" PHP files.
+
+
+
+=install==============================================================================
+
+
+  The following list of files are required to properly support the installation process 
+of eoCMS, in the order they are used:
+
+
+install.description.php:
+
+  This contains, in order, the long name of the database to be supported, the function 
+or class to be tested for  presence in a PHP installation,  and a list of the required 
+variable substitutions to get the database access and functions to work correctly.
+
+
+install.config.php:
+
+  Contains the actual  code that will be  substituted into the "config.php",  which is 
+not actually written until after  the version check has been done.  At the moment this 
+allows for a certain amount of flexibility in the construction of a "config.php". This 
+however may change at some  point in the future,  as all details and substitutions are 
+held in other parts of the system, or in other related "install" PHP files.
+
+
+install.test.php:
+
+  This contains either one or two functions  as required by the database that is being 
+supported,  allowing for a "connection"  to be made, usually with a host name,  a user 
+name, and a password.  A single function is  usually all  that is necessary to support 
+most file based database systems, and mostly without a user name or password.
+
+
+install.version.php:
+
+  Contains the actual  code that will be executed in order to  retrieve version infor-
+mation regarding the  database server  or service,  and any other  related information 
+that may be deemed necessary or  informative to an administrator,  for example, SQLite 
+is compiled with internal  character encode in one of two forms,  one is more reliable 
+the the other.  Another example is the "database engine" table present in MySQL.
+
+
+install.create.php:
+
+  This file is the meat of the supported database, and contains database specific DROP 
+and CREATE  TABLE in  raw SQL format.  Its allow the  database structure,  required by 
+eoCMS,  to be created very fast,  and without the complexity of using the "sql_create" 
+function.
+
+
+install.help.php:
+
+  This file contains lines of text that may be formatted into paragraphs, the contents 
+of which should be rated to any and all possible options or assistance for those times 
+when there is no simple answer to why the database is not working.  Things like tweaks 
+to their config files, path and user related permissions, known work-arounds, etc.
+
+
+
+=sql==================================================================================
+
+
+  The following  list of files are  required to properly  support a database extension 
+from within eoCMS:
+
+
+sql_affected_rows.php:
+
+  returns the number of rows that were affected by the last UPDATE or INSERT.
+
+
+sql_create.php:
+
+  a custom create function, can cater for simple or complex table creation,  including 
+search  optimisations and  high volume  database access.  See "sql_create.php"  in the 
+same folder as this file.
+
+
+sql_error.php:
+
+  returns the last error related to a previous sql query.
+
+
+sql_fetch_array.php:
+
+  returns a numbered array of values from a successful SELECT query.
+
+
+sql_fetch_assoc.php:
+
+  returns an associated array of values from a successful SELECT query.
+
+
+sql_fetch_object.php:
+
+  returns the results of a successful SELECT query as an object.
+
+
+sql_fetch_row.php:
+
+  returns the next row as a numbered array of values, or "false".
+
+
+sql_insert_id.php:
+
+  returns the next sequential value of the PRIMARY KEY id.
+
+
+sql_num_rows.php:
+
+  returns the number of rows returned by a successful SELECT query.
+
+
+sql_query.php:
+
+  executes a SELECT, UPDATE or INSERT statement.  Some database support requires check-
+ing this before passing the statement to the correct function,  for example SQLite3 has 
+separate functions for executing SELECT and UPDATE or INSERT statements.
+
+
+
+=notes================================================================================
+
+
+  The folder you add should  be named in lower case and  without special characters or 
+spaces.  There should also be an "index.php", which should be either empty, or contain 
+the summary  details of your  supported  database,  and any other  details you wish to 
+supply.
+
+
+  All "install" related PHP files are block remarked settings or initialisations con-
+tained within a valid PHP block, ie:
+
+  <?php
+  /*
+  _contents_here_
+  */
+  ?>
+
+
+  All "sql" related PHP  files are function includes,  returning results in "$sql" and 
+may take "$data" as the appropriate input (either as result object, or as an SQL state-
+ment).  "$con" contains the database  connection resource if one is required.  See the 
+current supported  databases for detailed examples of their usage,  "mysql" for server 
+connection examples, "sqlite" for file based service example, and "sqlite3" for object 
+related  examples.  "sqlite3"  contains  examples  of what to do  when the  associated 
+function  is not  directly  supported  within PHP.  All these  include  functions must 
+contain  one valid  PHP block,  with no  end of line  character after  the closing PHP 
+directive, with the first PHP code being the following:
+
+  if(!defined('DB_TYPE')) exit;
+ 
+
+  For example:
+  
+  <?php
+  if(!defined('DB_TYPE')) exit;
+
+  function pg_insert_id($pg,$query){// $pg - string connection, $query - sql command
+	$regExp = preg_match_all("/nextval\('([a-zA-Z0-9_]+)'\)/",$query,$array);
+	$sequence = $array[1][0];
+	$select = "SELECT currval('$sequence')";
+	$load = pg_query($pg,$select);
+	$id = pg_fetch_array($load,null,PGSQL_NUM);
+	return $id[0];
+  }
+  $sql = pg_insert_id($con,$data);
+
+  ?>
+
+
+
+=supported============================================================================
+
+
+  As of 13 March 2009, the following database support is provided with eoCMS:
+
+  MySQL
+  SQLite
+  SQLite3        (SQLite Objects)
+  MSSQL          (TDS)
+  Postgre 7.4
+  Postgre 8.1
+
+
+  To be supported next are:
+
+  Postgre 8.2+
+  filePro        (Mac - readonly)
+  
+
+  To be supported in the near future:
+
+  Oracle         (8i,9i,10i)
+  Sybase
+  Interbase      (Firebird)
+
+
+  To be supported later are:
+
+  Paradox
+  dBase
+  DB2            (IBM DB2, Cloudscape and Apache Derby)
+  Ingres         (Ingres DBMS, EDBC, and Enterprise Access Gateways)
+  MySQLi         (MySQL Objects)
+  mSQL
+  Mongo
+  MaxDB
+  Informix
+  DB++
+  FrontBase
+
+
+  Other databases not listed here,  or those that are requested may also be added,  or 
+added sooner than the above lists imply.  If you wish to request an unlisted database, 
+supply database support for an unlisted database and wish to tell others about it, you 
+can do so at the eoCMS website (http://eocms.com/).
+
+
+
+=end==================================================================================

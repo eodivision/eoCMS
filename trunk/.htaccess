@@ -1,0 +1,37 @@
+RewriteEngine On
+
+#ajax rewrite
+RewriteCond %{QUERY_STRING} ^act=ajax(.*)
+RewriteRule ^(.*)/index\.php index.php?act=ajax%1 [L]
+
+#act rewrites
+RewriteRule ^articles$ index.php?act=articles [L]
+RewriteRule ^articles/$ index.php?act=articles [L]
+
+RewriteRule ^forum$ index.php?act=forum [L]
+RewriteRule ^forum/$ index.php?act=forum [L]
+
+
+RewriteRule ^news$ index.php?act=news [L]
+RewriteRule ^news/$ index.php?act=news [L]
+
+
+#article rewrites
+RewriteRule ^article/(.*)\.([0-9]*)\.html$ index.php?act=articles&sa=article&article=$2 [L]
+RewriteRule ^articles/category/(.*)\.([0-9]*)\.html$ index.php?act=articles&sa=cat&cat=$2 [L]
+
+#forum rewrites
+RewriteRule ^forum/(.*)\.([0-9]*)/$ index.php?act=viewboard&id=$2 [L]
+RewriteRule ^forum/(.*)\.([0-9]*)\.p([0-9]*)/$ index.php?act=viewboard&id=$2&page=$3 [L]
+RewriteRule ^forum/(.*)\.([0-9]*)$ index.php?act=viewboard&id=$2 [L]
+RewriteRule ^forum/(.*)\.([0-9]*)\.p([0-9]*)$ index.php?act=viewboard&id=$2&page=$3 [L]
+RewriteRule ^forum/(.*)\.([0-9]*)\.html$ index.php?act=viewtopic&id=$2 [L]
+RewriteRule ^forum/(.*)\.([0-9]*)\.p([0-9]*)\.html$ index.php?act=viewtopic&id=$2&page=$3 [L]
+
+#news rewrite
+RewriteRule ^news/(.*)\.([0-9]*)\.html$ index.php?act=news&readmore=$2 [L]
+RewriteRule ^news/([0-9]*)/$ index.php?act=news&page=$1 [L]
+RewriteRule ^news/([0-9]*)$ index.php?act=news&page=$1 [L]
+
+#profile rewrite
+RewriteRule ^profile/(.*)\.([0-9]*)\.html$ index.php?act=profile&id=$2 [L]

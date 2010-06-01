@@ -1,0 +1,19 @@
+// bbCodePress
+//
+// smiley include list (simple)
+//
+// new line      = (bbcode=br)
+// divider image = (bbcode=ibr)
+// quick keys are NOT required, leave blank
+// $0 = selected text (or cursor if none) (see bbcode-simple.lst)
+
+// bbcode id, name (help text), codes, image, quick key
+happy,happy,:happy:,happy.gif,shift+ctrl+h
+sad,sad,:sad:,sad.gif,shift+ctrl+s
+angry,angry,:angry:angry.gif,
+tonge,tonge,:tonge:tonge.gif,
+lookup,lookup,:lookup:lookup.gif,
+roll,roll,:roll:,roll.gif,shift+ctrl+r
+evil,evil,:evil:,evil.gif,shift+ctrl+e
+jesus,jesus,:jesus:,jesus.gif,
+mrgreen,mrgreen,:mrgreen:,mrgreen.gif,

@@ -1,0 +1,9 @@
+Upload all files excluding this file and the license file.
+CHOMD config.php, /cache/, cache/tables.php to 777
+Make sure the directory eoCMS is in has writable permission (777), this should already be the case if installing
+in the root and will only affect those installing in folders
+Go to your site where eoCMS is installed. You should be redirected to ajaxinstall.php, if not go there manually
+Follow the instructions
+Once completed CHMOD config.php to 644 for security reasons
+
+Please submit any bugs/suggestions to the forum at http://eocms.com/

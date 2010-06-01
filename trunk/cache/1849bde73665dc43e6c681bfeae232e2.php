@@ -1,0 +1,2 @@
+<?php die(); ?>
+a:1:{i:0;a:18:{i:0;s:1:"1";s:8:"theme_id";s:1:"1";i:1;s:7:"default";s:10:"theme_name";s:7:"default";i:2;s:8:"confuser";s:12:"theme_author";s:8:"confuser";i:3;s:16:"http://eocms.com";s:11:"author_site";s:16:"http://eocms.com";i:4;s:0:"";s:12:"author_email";s:0:"";i:5;s:1:"1";s:13:"theme_version";s:1:"1";i:6;s:7:"default";s:6:"folder";s:7:"default";i:7;s:7:"1,2,3,4";s:16:"theme_visibility";s:7:"1,2,3,4";i:8;s:19:"default_preview.jpg";s:13:"theme_preview";s:19:"default_preview.jpg";}}

@@ -1,0 +1,16 @@
+.panel {
+	position: relative;	
+}
+#sidebar1 .content-right, #sidebar2 .content-right {
+	background: url(images/contentbg-right.png) no-repeat scroll right bottom;
+	margin: 0px -2px -1px;
+	padding: 0;
+}
+#sidebar1 .content-left, #sidebar2 .content-left {
+	background: url(images/contentbg-left.png) no-repeat scroll left bottom;
+	margin: 0px 1px -2px;
+	padding-bottom: 15px;
+}
+#mainContent {
+	position: relative;	
+}
