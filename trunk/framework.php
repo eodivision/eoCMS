@@ -1,5 +1,5 @@
 <?php
-/*  
+/*
 	eoCMS © 2007 - 2010, a Content Management System
 	by James Mortemore, Ryan Matthews
 	http://www.eocms.com
@@ -88,5 +88,13 @@ require(IN_PATH.'config.php');
 // this is the auto loader, if the class isn't already defined, it will attempt to load it
 function __autoload($class_name) {
     require_once IN_PATH.'functions/class.'.$class_name.'.php';
+}
+// Check for error reporting
+if(defined('DEBUG')) 
+    error_reporting('E_ALL');
+else {
+    // Disable errors
+    error_reporting(0);
+    @ini_set('display_errors', 0); // Fallback incase error_reporting(0) fails
 }
 ?>
