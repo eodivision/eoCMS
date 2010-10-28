@@ -90,25 +90,19 @@ if(!function_exists('json_encode')) {
 	}
 }
 define('IN_PATH', realpath('.') . '/'); // This allows us to use absolute urls based on the root of your eoCMS installation
-// Load the config containing database connection
-require(IN_PATH.'config.php');
 // This is the auto loader, if the class isn't already defined, it will attempt to load it
 function __autoload($class_name) {
-    require_once IN_PATH.'functions/class.'.$class_name.'.php';
+    require_once(IN_PATH.'classes/class.'.$class_name.'.php');
 }
-function user($variable, $modify = '') {
-	/**
-	 * Modifies $variable column in users table
-	 * with the contents of $modify
-	 * If modify emtpy it returns the user data from the table
-	 * Returns: User data from users table
-	 */
-	if(empty($modify)) {
-		
-		return $modify;
-	} else
-		return (isset($eocms['user'][$variable]) ? $eocms['user'][$variable] : '');
-}
+// Load the config containing database connection and other related installation settings
+require(IN_PATH.'config.php');
+// Create eocms variable with basic info
+$eocms = array('query_count' => 0);
+// Grab the settings and cache them
+$settingsSQL = $sql -> query("SELECT * FROM settings", 'cache');
+foreach($settingSQL as $settingrow)
+	$eocms['settings'][$settingrow['variable']] = $settingrow['value'];
+// Rather than using $eocms we use functions to eliminate the need for globalising variables in many functions, plus it looks neater :D
 function setting($variable, $modify = '') {
 	/**
 	 * Modifies $variable column in settings table
@@ -116,10 +110,28 @@ function setting($variable, $modify = '') {
 	 * If modify emtpy it returns the setting data from the table
 	 * Returns: Setting data from settings table
 	 */
+	global $eocms;
 	if(empty($modify)) {
-		
+		$sql -> query("UPDATE ".PREFIX."settings SET value = '$modify' WHERE variable = '$variable'");
+		return $modify;
 	} else
-		return (isset($eocms['setting'][$variable]) ? $eocms['setting'][$variable] : '');
+		return (isset($eocms['settings'][$variable]) ? $eocms['settings'][$variable] : '');
+}
+// Start the user class
+$user = new User();
+function user($variable, $modify = '') {
+	/**
+	 * Modifies $variable column in users table
+	 * with the contents of $modify
+	 * If modify emtpy it returns the user data from the table
+	 * Returns: User data from users table
+	 */
+	global $eocms;
+	if(empty($modify)) {
+		$sql -> query("UPDATE ".PREFIX."users SET $variable = '$modify' WHERE id = '".$eocms['user']['id']."'");
+		return $modify;
+	} else
+		return (isset($eocms['user'][$variable]) ? $eocms['user'][$variable] : '');
 }
 // Check for error reporting
 if(setting('debug')) 
