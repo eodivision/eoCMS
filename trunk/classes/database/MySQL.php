@@ -22,9 +22,15 @@ class MySQL extends SQL {
 		else
 			return false;
 	}
-	public function query($query) {
-		$this->last_resource = mysql_query($query);
-		return $this->last_resoruce;
+	public function query($query, $cache = '') {
+		self::cache_check($query);
+		if(empty($cache)) {
+			global $eocms;
+			$this->last_resource = mysql_query($query);
+			++$eocms['query_count'];
+			return $this->last_resoruce;
+		} else
+			return self::cache($query);
 	}
 	public function fetch_array($resource = '') {
 		return mysql_fetch_array(self::resource($resource));
