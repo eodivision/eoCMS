@@ -26,6 +26,7 @@ abstract class SQL {
 		else
 			return $resource;
 	}
+	public abstract function error($show);
 }
 require('database/'.DB_TYPE.'.php');
 ?>

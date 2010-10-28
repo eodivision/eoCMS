@@ -14,6 +14,14 @@ class MySQL extends SQL {
 		mysql_connect($info['host'], $info['user'], $info['password']);
 		mysql_select_db($info['database']);
 	}
+	public function error($status = '') {
+		if($status = 'show')
+			return mysql_error();
+		elseif(is_resource(self::resource($status)))
+			return true;
+		else
+			return false;
+	}
 	public function query($query) {
 		$this->last_resource = mysql_query($query);
 		return $this->last_resoruce;
