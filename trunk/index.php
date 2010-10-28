@@ -1,7 +1,7 @@
 <?php
 /*
 	eoCMS © 2007 - 2010, a Content Management System
-	by James Mortemore, Ryan Matthews
+	by James Mortemore
 	http://www.eocms.com
 	is licenced under a Creative Commons
 	Attribution-Share Alike 2.0 UK: England & Wales Licence.
@@ -10,12 +10,13 @@
 	Additional licence terms at http://eocms.com/licence.html
 */
 define("IN_ECMS", true);
-// IE8 frame busting, well thats the only good thing it has :P
-header('X-FRAME-OPTIONS: SAMEORIGIN');
 // gzip check
 require_once('framework.php');
-if($settings['gzip'])
+if(setting('gzip'))
     ob_start('ob_gzhandler');
 else
-	ob_start(); // set caching of output to web server
+	ob_start(); // Set caching of output to web server
+// IE8 frame busting, well thats the only good thing it has :P (Now supported by Firefox woot)
+if(!setting('xframe'))
+	header('X-FRAME-OPTIONS: SAMEORIGIN');
 ?>

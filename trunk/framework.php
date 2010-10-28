@@ -1,7 +1,7 @@
 <?php
 /*
 	eoCMS © 2007 - 2010, a Content Management System
-	by James Mortemore, Ryan Matthews
+	by James Mortemore
 	http://www.eocms.com
 	is licenced under a Creative Commons
 	Attribution-Share Alike 2.0 UK: England & Wales Licence.
@@ -9,20 +9,24 @@
 	may be available at http://creativecommons.org/licenses/by-sa/2.0/uk/.
 	Additional licence terms at http://eocms.com/licence.html
 */
-// Snippet from php.net by bohwaz
-// below function kills register globals
-// to remove any possible security threats if it is on
+/**
+ * Snippet from php.net by bohwaz
+ * below function kills register globals
+ * to remove any possible security threats if it is on
+ */
 if(ini_get('register_globals')) {
-	function unregister_globals(){
+	function unregister_globals() {
 		foreach(func_get_args() as $name) {
 			foreach($GLOBALS[$name] as $key => $value) {
-				if (isset($GLOBALS[$key]))
+				if(isset($GLOBALS[$key]))
 					unset($GLOBALS[$key]);
 			}
 		}
 	}
 	unregister_globals('_POST', '_GET', '_COOKIE', '_REQUEST', '_SERVER', '_ENV', '_FILES', '_SESSION');
 }
+// Encodes HTML within below globals, takes into account magic quotes.
+// Note: $_SERVER is not sanitised, be aware of this when using it.
 $in = array(&$_GET, &$_POST, &$_COOKIE, &$_REQUEST);
 if(get_magic_quotes_gpc()) {
 	while(list($k, $v) = each($in)) {
@@ -44,10 +48,13 @@ if(get_magic_quotes_gpc()) {
 	}
 }
 unset($in);
-// Snippet from php.net by Steve
-// below function is created if the host does not have the JSON Functions installed
 if(!function_exists('json_encode')) {
 	function json_encode($a = false) {
+		/**
+     	* This function encodes a PHP array into JSON
+		* Function from php.net by Steve
+     	* Returns: JSON
+     	*/
     	if(is_null($a))
 			return 'null';
     	if($a === false)
@@ -82,15 +89,40 @@ if(!function_exists('json_encode')) {
 		}
 	}
 }
-define('IN_PATH', realpath('.') . '/'); // this allows us to use absolute urls based on the root of your eoCMS installation
-// load the config containing database connection
+define('IN_PATH', realpath('.') . '/'); // This allows us to use absolute urls based on the root of your eoCMS installation
+// Load the config containing database connection
 require(IN_PATH.'config.php');
-// this is the auto loader, if the class isn't already defined, it will attempt to load it
+// This is the auto loader, if the class isn't already defined, it will attempt to load it
 function __autoload($class_name) {
     require_once IN_PATH.'functions/class.'.$class_name.'.php';
 }
+function user($variable, $modify = '') {
+	/**
+	 * Modifies $variable column in users table
+	 * with the contents of $modify
+	 * If modify emtpy it returns the user data from the table
+	 * Returns: User data from users table
+	 */
+	if(empty($modify)) {
+		
+		return $modify;
+	} else
+		return (isset($eocms['user'][$variable]) ? $eocms['user'][$variable] : '');
+}
+function setting($variable, $modify = '') {
+	/**
+	 * Modifies $variable column in settings table
+	 * with the contents of $modify
+	 * If modify emtpy it returns the setting data from the table
+	 * Returns: Setting data from settings table
+	 */
+	if(empty($modify)) {
+		
+	} else
+		return (isset($eocms['setting'][$variable]) ? $eocms['setting'][$variable] : '');
+}
 // Check for error reporting
-if(defined('DEBUG')) 
+if(setting('debug')) 
     error_reporting('E_ALL');
 else {
     // Disable errors
