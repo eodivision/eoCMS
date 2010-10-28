@@ -126,6 +126,21 @@ abstract class SQL {
 		}
 		return $sql_data;
 	}
+	public function clear_cache() {
+		/**
+	 	* Destroys all cache files and empties tables.php
+		* Returns: @Void
+		*/
+		// Reset the tables.php
+		file_put_contents('./'.CACHE.'/tables.php', "<?php die(); ?>\n");
+		// Remove any cache files
+		$dir = opendir(CACHE.'/');
+			while(($file = readdir($dir)) !==false ) {
+				if(strlen($file) == 36 && $file != 'index.php' && $file != 'tables.php')
+					unlink('./'.CACHE.'/'.$file);
+			}
+		closedir($dir);
+	}
 }
 require('database/'.DB_TYPE.'.php');
 ?>
