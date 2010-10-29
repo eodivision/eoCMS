@@ -15,7 +15,6 @@
  * below function kills register globals
  * to remove any possible security threats if it is on
  */
- 
 if(ini_get('register_globals')) {
 	function unregister_globals() {
 		foreach(func_get_args() as $name) {
@@ -98,7 +97,7 @@ define('IN_PATH', realpath('.') . '/'); // This allows us to use absolute urls b
 
 // Class loading functions
 
-$classes = array(); // This variable stores a list of all loaded classes
+$eocms['classes'] = array(); // This variable stores a list of all loaded classes
 
 function __autoload($class_name) {
 	/**
@@ -107,12 +106,10 @@ function __autoload($class_name) {
 	 * by PHP.
 	 * Returns: @VOID
 	 */
-	
-	global $classes;
+	global $eocms;
 	
     require_once(IN_PATH.'classes/'.$class_name.'.class.php');
-    
-    $classes[] = $class_name; // Update class array with newly loaded class
+    $eocms['classes'][] = $class_name; // Update class array with newly loaded class
 }
 
 function class_is_loaded($class_name) {
@@ -121,14 +118,12 @@ function class_is_loaded($class_name) {
 	 * loaded into the system. 
 	 * Returns: @BOOL
 	 */
+	 global $eocms;
 	 
-	 global $classes;
-	 
-	 if(in_array($classname)) {
+	 if(in_array($class_name, $eocms['classes']))
 		 return true;
-	 } else {
+	 else
 		 return false;
-	 }
 }
 
 // Load the config containing database connection and other related installation settings
@@ -149,6 +144,7 @@ function setting($variable, $modify = '') {
 	 * Returns: Setting data from settings table: @ARRAY
 	 */
 	global $eocms;
+	
 	if(empty($modify)) {
 		$sql -> query("UPDATE ".PREFIX."settings SET value = '$modify' WHERE variable = '$variable'");
 		return $modify;
@@ -167,6 +163,7 @@ function user($variable, $modify = '') {
 	 * Returns: User data from users table
 	 */
 	global $eocms;
+	
 	if(empty($modify)) {
 		$sql -> query("UPDATE ".PREFIX."users SET $variable = '$modify' WHERE id = '".$eocms['user']['id']."'");
 		return $modify;
