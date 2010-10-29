@@ -1,0 +1,44 @@
+<eocms>
+	<stem name="Introduction">
+		<page>Welcome</page>
+		<page>Requirements</page>
+	</stem>
+
+	<stem name="Theme">
+		<stem name="Creating Themes">
+		
+		</stem>
+	</stem>
+
+	<stem name="CMS">
+		<stem name="Creating Pages">
+			<page>Foo</page>
+		</stem>
+	</stem>
+	
+	<stem name="Class Library">
+		<class name="SQL">
+			<page>Overview</page>
+			<function type="structor">__construct</function>
+		
+			<function type="abstract">_connect</function>
+			<function type="abstract">_query</function>
+			<function type="abstract">_fetch_array</function>
+			<function type="abstract">_fetch_assoc</function>
+			<function type="abstract">_fetch_object</function>
+			<function type="abstract">_fetch_row</function>
+			<function type="abstract">_affected_rows</function>
+			<function type="abstract">_insert_id</function>
+			<function type="abstract">_num_rows</function>
+			<function type="abstract">_error</function>
+			
+			<function type="builtin">resource</function>
+			<function type="builtin">cache_check</function>
+			<function type="builtin">create_cache</function>
+			<function type="builtin">add_table_cache</function>
+			<function type="builtin">get_cache</function>
+			<function type="builtin">cache</function>
+			<function type="builtin">clear_cache</function>
+		</class>
+	</stem>
+</eocms>
