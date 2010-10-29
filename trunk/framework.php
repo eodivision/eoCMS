@@ -9,11 +9,13 @@
 	may be available at http://creativecommons.org/licenses/by-sa/2.0/uk/.
 	Additional licence terms at http://eocms.com/licence.html
 */
+
 /**
  * Snippet from php.net by bohwaz
  * below function kills register globals
  * to remove any possible security threats if it is on
  */
+ 
 if(ini_get('register_globals')) {
 	function unregister_globals() {
 		foreach(func_get_args() as $name) {
@@ -25,6 +27,7 @@ if(ini_get('register_globals')) {
 	}
 	unregister_globals('_POST', '_GET', '_COOKIE', '_REQUEST', '_SERVER', '_ENV', '_FILES', '_SESSION');
 }
+
 // Encodes HTML within below globals, takes into account magic quotes.
 // Note: $_SERVER is not sanitised, be aware of this when using it.
 $in = array(&$_GET, &$_POST, &$_COOKIE, &$_REQUEST);
@@ -47,7 +50,9 @@ if(get_magic_quotes_gpc()) {
 		}
 	}
 }
+
 unset($in);
+
 if(!function_exists('json_encode')) {
 	function json_encode($a = false) {
 		/**
@@ -90,10 +95,42 @@ if(!function_exists('json_encode')) {
 	}
 }
 define('IN_PATH', realpath('.') . '/'); // This allows us to use absolute urls based on the root of your eoCMS installation
-// This is the auto loader, if the class isn't already defined, it will attempt to load it
+
+// Class loading functions
+
+$classes = array(); // This variable stores a list of all loaded classes
+
 function __autoload($class_name) {
-    require_once(IN_PATH.'classes/class.'.$class_name.'.php');
+	/**
+	 * This function allows us to automagically load our class files,
+	 * should they not already be loaded. It is called automatically 
+	 * by PHP.
+	 * Returns: @VOID
+	 */
+	
+	global $classes;
+	
+    require_once(IN_PATH.'classes/'.$class_name.'.class.php');
+    
+    $classes[] = $class_name; // Update class array with newly loaded class
 }
+
+function class_is_loaded($class_name) {
+	/**
+	 * This function allows us to check whether a class has been
+	 * loaded into the system. 
+	 * Returns: @BOOL
+	 */
+	 
+	 global $classes;
+	 
+	 if(in_array($classname)) {
+		 return true;
+	 } else {
+		 return false;
+	 }
+}
+
 // Load the config containing database connection and other related installation settings
 require(IN_PATH.'config.php');
 // Create eocms variable with basic info
@@ -102,13 +139,14 @@ $eocms = array('query_count' => 0);
 $settingsSQL = $sql -> query("SELECT * FROM settings", 'cache');
 foreach($settingSQL as $settingrow)
 	$eocms['settings'][$settingrow['variable']] = $settingrow['value'];
+	
 // Rather than using $eocms we use functions to eliminate the need for globalising variables in many functions, plus it looks neater :D
 function setting($variable, $modify = '') {
 	/**
 	 * Modifies $variable column in settings table
 	 * with the contents of $modify
 	 * If modify emtpy it returns the setting data from the table
-	 * Returns: Setting data from settings table
+	 * Returns: Setting data from settings table: @ARRAY
 	 */
 	global $eocms;
 	if(empty($modify)) {
@@ -117,8 +155,10 @@ function setting($variable, $modify = '') {
 	} else
 		return (isset($eocms['settings'][$variable]) ? $eocms['settings'][$variable] : '');
 }
+
 // Start the user class
 $user = new User();
+
 function user($variable, $modify = '') {
 	/**
 	 * Modifies $variable column in users table
@@ -133,6 +173,7 @@ function user($variable, $modify = '') {
 	} else
 		return (isset($eocms['user'][$variable]) ? $eocms['user'][$variable] : '');
 }
+
 // Check for error reporting
 if(setting('debug')) 
     error_reporting('E_ALL');
