@@ -47,11 +47,11 @@ abstract class SQL {
 				if(is_array($table)) { // If its a nested array loop through it
 					foreach($table as $t) {
 						if(strpos($query, $t)) // Check if the query is within the array, if it is destroy the cache
-							self::destroycache($sql);
+							self::clear_cache($sql);
 					}
 				} else { // Same as above but without the looping
 					if(strpos($data, $table))
-						self::destroycache($sql);
+						self::clear_cache($sql);
 				}
 			}
 		}
@@ -65,8 +65,8 @@ abstract class SQL {
 		$location = './'.CACHE.'/'.md5($query).'.php'; // The soon to be cache file
 		if(!file_exists($location)) { // Check if the file doesn't exist
 			$data = array();
-			$sql = self::query($query); // Run the query
-			while($fetch = call('sql_fetch_array', $sql)) // Loop through the fetched data
+			$sql = $this -> query($query); // Run the query
+			while($fetch = $this -> fetch_array()) // Loop through the fetched data
 				$data[] = $fetch;
 			file_put_contents($location, "<?php die(); ?>\n".serialize($data)); // Create the file
 		} else
@@ -96,7 +96,7 @@ abstract class SQL {
 			}
 		}
 		$tables = array($query => $table_cache); 
-		if(strlen($this -> table_cache) <= 15) // If its <= 15 then its empty, meaning no merging needed
+		if(strlen(serialize($this -> table_cache)) <= 15) // If its <= 15 then its empty, meaning no merging needed
 			$this -> table_cache = $tables;
 		else
 			$this -> table_cache = array_merge($tables, $this -> table_cache); // Merge the table_cache in memory with the new cached query 
@@ -133,21 +133,26 @@ abstract class SQL {
 		}
 		return $sql_data;
 	}
-	public function clear_cache() {
+	public function clear_cache($query = '') {
 		/**
-	 	* Destroys all cache files and empties tables.php
+	 	* Destroys all cache files and empties tables.php if $query is empty
+		* Otherwise it clears the cache file for that query
 		* Returns: @Void
 		*/
 		// Reset the tables.php
-		file_put_contents('./'.CACHE.'/tables.php', "<?php die(); ?>\n");
-		// Remove any cache files
-		$dir = opendir(CACHE.'/');
-			while(($file = readdir($dir)) !==false ) {
-				if(strlen($file) == 36 && $file != 'index.php' && $file != 'tables.php')
-					unlink('./'.CACHE.'/'.$file);
-			}
-		closedir($dir);
+		if($query == '') {
+			file_put_contents('./'.CACHE.'/tables.php', "<?php die(); ?>\n");
+			// Remove any cache files
+			$dir = opendir(CACHE.'/');
+				while(($file = readdir($dir)) !==false ) {
+					if(strlen($file) == 36 && $file != 'index.php' && $file != 'tables.php')
+						unlink('./'.CACHE.'/'.$file);
+				}
+			closedir($dir);
+		} else {
+			if(file_exists('./'.CACHE.'/'.md5($query).'.php'))
+				unlink('./'.CACHE.'/'.md5($query).'.php');
+		}
 	}
 }
-require('database/'.DB_TYPE.'.php');
 ?>
