@@ -10,8 +10,8 @@
 	Additional licence terms at http://eocms.com/licence.html
 */
 define("IN_ECMS", true);
-// gzip check
 require_once('framework.php');
+// gzip check
 if(setting('gzip'))
     ob_start('ob_gzhandler');
 else
