@@ -131,7 +131,7 @@ require(IN_PATH.'config.php');
 // Create eocms variable with basic info
 $eocms = array('query_count' => 0);
 // Grab the settings and cache them
-$settingsSQL = $sql -> query("SELECT * FROM settings", 'cache');
+$settingsSQL = $sql -> query("SELECT * FROM ".PREFIX."settings", 'cache');
 foreach($settingSQL as $settingrow)
 	$eocms['settings'][$settingrow['variable']] = $settingrow['value'];
 	
@@ -143,7 +143,7 @@ function setting($variable, $modify = '') {
 	 * If modify emtpy it returns the setting data from the table
 	 * Returns: Setting data from settings table: @ARRAY
 	 */
-	global $eocms;
+	global $eocms, $sql;
 	
 	if(empty($modify)) {
 		$sql -> query("UPDATE ".PREFIX."settings SET value = '$modify' WHERE variable = '$variable'");
@@ -153,7 +153,7 @@ function setting($variable, $modify = '') {
 }
 
 // Start the user class
-$user = new User();
+$user = new User_Management();
 
 function user($variable, $modify = '') {
 	/**
@@ -164,7 +164,7 @@ function user($variable, $modify = '') {
 	 */
 	global $eocms;
 	
-	if(empty($modify)) {
+	if(!empty($modify)) {
 		$sql -> query("UPDATE ".PREFIX."users SET $variable = '$modify' WHERE id = '".$eocms['user']['id']."'");
 		return $modify;
 	} else
