@@ -38,15 +38,26 @@ class User_Management {
 		else {
 			// No cookie found meaning they are just a guest
 			$eocms['user']['membergroup'] = 1; // Set their membergroup to guest
-			$guestSQL = $sql -> query("SELECT * FROM permissions WHERE membergroup_id = '1'", 'cache'); // Cache this query as it will be run very often
+			$guestSQL = $sql -> query("SELECT * FROM ".PREFIX."permissions WHERE membergroup_id = '1'", 'cache'); // Cache this query as it will be run very often
 			foreach($guestSQL as $guest)
 				$eocms['user'][$guest['variable']] = $guest['value'];
 		}
 	}
 	public function login($usernme, $password, $remember) {
+		/**
+		 * Checks the username and password
+		 * Creates the cookie which keeps users logged in
+		 * Updates relative database info such as last logged in
+		 * Returns: @Void
+		 */
 		
 	}
 	public function ip() {
+		/**
+		 * Finds the correct IP Address
+		 * Handles servers which do not populate the server_addr variable
+		 * Returns: @String
+		 */
 		if(!isset($_SERVER['SERVER_ADDR']))
 			$_SERVER['SERVER_ADDR'] = '';
 		return ($_SERVER['REMOTE_ADDR']==$_SERVER['SERVER_ADDR'] && isset($_SERVER['HTTP_X_FORWARDED_FOR'])) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : $_SERVER['REMOTE_ADDR'];
