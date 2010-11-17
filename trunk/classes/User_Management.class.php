@@ -48,7 +48,7 @@ class User_Management {
 		 * Checks the username and password
 		 * Creates the cookie which keeps users logged in
 		 * Updates relative database info such as last logged in
-		 * Returns: @BOOLEAN
+		 * Returns: @Boolean
 		 */
 		global $sql;
 		
@@ -110,7 +110,7 @@ class User_Management {
 		/**
 		 * Deletes the cookie keeping them logged in
 		 * Removes them from the online list
-		 * Returns: @Void
+		 * Returns: @Boolean
 		 */
 		global $eocms, $sql;
 		

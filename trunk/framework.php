@@ -31,7 +31,7 @@ if(!function_exists('json_encode')) {
 		/**
      	* This function encodes a PHP array into JSON
 		* Function from php.net by Steve
-     	* Returns: JSON
+     	* Returns: @JSON
      	*/
     	if(is_null($a))
 			return 'null';
@@ -70,7 +70,7 @@ if(!function_exists('json_encode')) {
 function random_string($length = 32) {
 	/**
 	* Generates a random alphanumeric string with a specfied length
-	* Returns: @STRING
+	* Returns: @String
 	*/
 	return substr(str_shuffle('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, $length);	
 }
@@ -85,7 +85,7 @@ function __autoload($class_name) {
 	 * This function allows us to automagically load our class files,
 	 * should they not already be loaded. It is called automatically 
 	 * by PHP.
-	 * Returns: @VOID
+	 * Returns: @Void
 	 */
 	global $eocms;
 	
@@ -97,7 +97,7 @@ function class_is_loaded($class_name) {
 	/**
 	 * This function allows us to check whether a class has been
 	 * loaded into the system. 
-	 * Returns: @BOOL
+	 * Returns: @Boolean
 	 */
 	 global $eocms;
 	 
@@ -149,7 +149,7 @@ function setting($variable, $modify = '') {
 	 * Modifies $variable column in settings table
 	 * with the contents of $modify
 	 * If modify emtpy it returns the setting data from the table
-	 * Returns: Setting data from settings table: @ARRAY
+	 * Returns: Setting data from settings table: @Array
 	 */
 	global $eocms, $sql;
 	
@@ -168,7 +168,7 @@ function user($variable, $modify = '') {
 	 * Modifies $variable column in users table
 	 * with the contents of $modify
 	 * If modify emtpy it returns the user data from the table
-	 * Returns: User data from users table
+	 * Returns: User data from users table: @String
 	 */
 	global $eocms;
 	
