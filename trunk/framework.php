@@ -93,6 +93,13 @@ if(!function_exists('json_encode')) {
 		}
 	}
 }
+function random_string($length = 32) {
+	/**
+	* Generates a random alphanumeric string with a specfied length
+	* Returns: @STRING
+	*/
+	return substr(str_shuffle('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, $length);	
+}
 define('IN_PATH', realpath('.') . '/'); // This allows us to use absolute urls based on the root of your eoCMS installation
 
 // Class loading functions
