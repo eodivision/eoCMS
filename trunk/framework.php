@@ -179,4 +179,7 @@ else {
     error_reporting(0);
     @ini_set('display_errors', 0); // Fallback incase error_reporting(0) fails
 }
+// Below provides an optional addition to links to prevent other users from creating dangerous links which the user may accidently click
+if(!user('guest'))
+	define('AUTHID', substr(user('pass'), 10, 32));
 ?>
