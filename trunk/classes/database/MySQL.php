@@ -53,5 +53,8 @@ class MySQL extends SQL {
 	public function num_rows($resource = '') {
 		return mysql_num_rows(self::resource($resource));
 	}
+	public function escape($string) {
+		return mysql_real_escape_string($string);	
+	}
 }
 ?>

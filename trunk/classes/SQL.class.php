@@ -27,6 +27,7 @@ abstract class SQL {
 	public abstract function insert_id();
 	public abstract function num_rows($resource);
 	public abstract function error($show);
+	public abstract function escape($string);
 	
 	// Declare builtin functions
 	public function resource($resource) {

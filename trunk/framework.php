@@ -26,32 +26,6 @@ if(ini_get('register_globals')) {
 	}
 	unregister_globals('_POST', '_GET', '_COOKIE', '_REQUEST', '_SERVER', '_ENV', '_FILES', '_SESSION');
 }
-
-// Encodes HTML within below globals, takes into account magic quotes.
-// Note: $_SERVER is not sanitised, be aware of this when using it.
-$in = array(&$_GET, &$_POST, &$_COOKIE, &$_REQUEST);
-if(get_magic_quotes_gpc()) {
-	while(list($k, $v) = each($in)) {
-		foreach($v as $key => $val) {
-			if(!is_array($val)) 
-				$in[$k][htmlspecialchars(stripslashes($key), ENT_QUOTES)] = htmlspecialchars(stripslashes($val), ENT_QUOTES);
-			else
-				$in[] =& $in[$k][$key];
-		}
-	}
-} else {
-	while(list($k, $v) = each($in)) {
-		foreach($v as $key => $val) {
-			if(!is_array($val))
-				$in[$k][htmlspecialchars($key, ENT_QUOTES)] = htmlspecialchars($val, ENT_QUOTES);
-			else
-				$in[] =& $in[$k][$key];
-		}
-	}
-}
-
-unset($in);
-
 if(!function_exists('json_encode')) {
 	function json_encode($a = false) {
 		/**
@@ -135,6 +109,33 @@ function class_is_loaded($class_name) {
 
 // Load the config containing database connection and other related installation settings
 require(IN_PATH.'config.php');
+/** 
+ * Encodes HTML within below globals, takes into account magic quotes.
+ * Note: $_SERVER is not sanitised, be aware of this when using it.
+ * Why repeat it twice? Checking magic quotes everytime in a loop is slow and so is any additional if statements ;)
+ */
+$in = array(&$_GET, &$_POST, &$_COOKIE, &$_REQUEST);
+if(get_magic_quotes_gpc()) {
+	while(list($k, $v) = each($in)) {
+		foreach($v as $key => $val) {
+			if(!is_array($val)) 
+				$in[$k][$sql -> escape(htmlspecialchars(stripslashes($key), ENT_QUOTES))] = $sql -> escape(htmlspecialchars(stripslashes($val), ENT_QUOTES));
+			else
+				$in[] =& $in[$k][$key];
+		}
+	}
+} else {
+	while(list($k, $v) = each($in)) {
+		foreach($v as $key => $val) {
+			if(!is_array($val))
+				$in[$k][$sql -> escape(htmlspecialchars($key, ENT_QUOTES))] = $sql -> escape(htmlspecialchars($val, ENT_QUOTES));
+			else
+				$in[] =& $in[$k][$key];
+		}
+	}
+}
+
+unset($in);
 // Create eocms variable with basic info
 $eocms = array('query_count' => 0);
 // Grab the settings and cache them
