@@ -179,6 +179,37 @@ function user($variable, $modify = '') {
 		return (isset($eocms['user'][$variable]) ? $eocms['user'][$variable] : '');
 }
 
+// Error functions
+
+function error($error) {
+	/**
+	 * Adds an error to the system
+	 * Returns: @Void
+	 */
+	global $eocms;
+	
+	$eocms['error'][] = $error;	
+}
+function fatal_error($error) {
+	/**
+	 * Adds a fatal error to the system
+	 * Displays only error on the page (handled by theme system)
+	 * Returns: @Void
+	 */
+	global $eocms;
+	
+	$eocms['fatal_errors'][] = $error;
+}
+function errors() {
+	/**
+	 * Returns true if errors found, false if none found
+	 * Returns: @Boolean
+	 */
+	global $eocms;
+	
+	return (isset($eocms['errors']) && !empty($eocms['errors'])) || (isset($eocms['fatal_errors']) && !empty($eocms['fatal_errors']));
+}
+
 // Check for error reporting
 if(setting('debug')) 
     error_reporting('E_ALL');
