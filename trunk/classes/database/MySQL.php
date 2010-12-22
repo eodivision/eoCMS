@@ -18,9 +18,9 @@ class MySQL extends SQL {
 		if($status = 'show')
 			return mysql_error($this -> connection);
 		elseif(is_resource(self::resource($status)))
-			return true;
-		else
 			return false;
+		else
+			return true;
 	}
 	public function query($query, $cache = '') {
 		self::cache_check($query);
@@ -42,7 +42,7 @@ class MySQL extends SQL {
 		return mysql_fetch_object(self::resource($resource));
 	}
 	public function fetch_row($resource = '') {
-		return mysql_fetch_object(self::resource($resource));
+		return mysql_fetch_row(self::resource($resource));
 	}
 	public function affected_rows() {
 		return mysql_affected_rows($this -> connection);
