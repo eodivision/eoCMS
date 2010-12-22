@@ -11,12 +11,12 @@
 */
 class MySQL extends SQL {
 	public function connect($info) {
-		mysql_connect($info['host'], $info['user'], $info['password']);
-		mysql_select_db($info['database']);
+		$this -> connection = mysql_connect($info['host'], $info['user'], $info['password']);
+		mysql_select_db($info['database'], $this -> connection);
 	}
 	public function error($status = '') {
 		if($status = 'show')
-			return mysql_error();
+			return mysql_error($this -> connection);
 		elseif(is_resource(self::resource($status)))
 			return true;
 		else
@@ -45,10 +45,10 @@ class MySQL extends SQL {
 		return mysql_fetch_object(self::resource($resource));
 	}
 	public function affected_rows() {
-		return mysql_affected_rows();
+		return mysql_affected_rows($this -> connection);
 	}
 	public function insert_id() {
-		return mysql_insert_id();
+		return mysql_insert_id($this -> connection);
 	}
 	public function num_rows($resource = '') {
 		return mysql_num_rows(self::resource($resource));
