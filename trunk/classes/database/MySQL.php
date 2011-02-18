@@ -1,6 +1,6 @@
 <?php
 /*
-	eoCMS Â© 2007 - 2010, a Content Management System
+	eoCMS © 2007 - 2010, a Content Management System
 	by James Mortemore
 	http://www.eocms.com
 	is licenced under a Creative Commons
@@ -11,24 +11,24 @@
 */
 class MySQL extends SQL {
 	public function connect($info) {
-		$this -> connection = mysql_connect($info['host'], $info['user'], $info['password']);
-		mysql_select_db($info['database'], $this -> connection);
+		mysql_connect($info['host'], $info['user'], $info['password']);
+		mysql_select_db($info['database']);
 	}
 	public function error($status = '') {
 		if($status = 'show')
-			return mysql_error($this -> connection);
+			return mysql_error();
 		elseif(is_resource(self::resource($status)))
-			return false;
-		else
 			return true;
+		else
+			return false;
 	}
 	public function query($query, $cache = '') {
 		self::cache_check($query);
 		if(empty($cache)) {
 			global $eocms;
-			$this->last_resource = mysql_query($query);
+			$this -> last_resource = mysql_query($query);
 			++$eocms['query_count'];
-			return $this->last_resoruce;
+			return $this -> last_resource;
 		} else
 			return self::cache($query);
 	}
@@ -45,13 +45,16 @@ class MySQL extends SQL {
 		return mysql_fetch_row(self::resource($resource));
 	}
 	public function affected_rows() {
-		return mysql_affected_rows($this -> connection);
+		return mysql_affected_rows();
 	}
 	public function insert_id() {
-		return mysql_insert_id($this -> connection);
+		return mysql_insert_id();
 	}
 	public function num_rows($resource = '') {
-		return mysql_num_rows(self::resource($resource));
+		if(is_resource(self::resource($resource)))
+			return mysql_num_rows(self::resource($resource));
+		else
+			return count(self::resource($resource));
 	}
 	public function escape($string) {
 		return mysql_real_escape_string($string);	

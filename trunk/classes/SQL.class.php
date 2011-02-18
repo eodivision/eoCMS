@@ -1,6 +1,6 @@
 <?php
 /*
-	eoCMS Â© 2007 - 2010, a Content Management System
+	eoCMS © 2007 - 2010, a Content Management System
 	by James Mortemore
 	http://www.eocms.com
 	is licenced under a Creative Commons
@@ -13,21 +13,27 @@ abstract class SQL {
 	var $last_resource;
 	var $table_cache;
 	function __construct() {
-		$this -> table_cache = unserialize(file_get_contents('./'.CACHE.'/tables.php', NULL, NULL, 16));
+		global $eocms;
+		$eocms['query_count'] = 0;
+		$this -> table_cache = file_get_contents(IN_PATH.CACHE.'/tables.php', NULL, NULL, 16);
+		if(!empty($this -> table_cache))
+			$this -> table_cache = unserialize($this -> table_cache);
+		else
+			$this -> table_cache = array();
 	}
 	
 	// Declare abstract functions
 	public abstract function connect($info);
 	public abstract function query($query, $cache = '');
-	public abstract function fetch_array($resource);
-	public abstract function fetch_assoc($resource);
-	public abstract function fetch_object($resource);
-	public abstract function fetch_row($resource);
+	public abstract function fetch_array($resource = '');
+	public abstract function fetch_assoc($resource = '');
+	public abstract function fetch_object($resource = '');
+	public abstract function fetch_row($resource = '');
 	public abstract function affected_rows();
 	public abstract function insert_id();
-	public abstract function num_rows($resource);
-	public abstract function error($show);
-	public abstract function escape($string);
+	public abstract function num_rows($resource = '');
+	public abstract function error($status = '');
+	//public abstract function escape($string);
 	
 	// Declare builtin functions
 	public function resource($resource) {
@@ -63,12 +69,12 @@ abstract class SQL {
 	 	* Creates the cache file
 		* Returns: false if cache file does exist
 		*/
-		$location = './'.CACHE.'/'.md5($query).'.php'; // The soon to be cache file
+		$location = IN_PATH.CACHE.'/'.md5($query).'.php'; // The soon to be cache file
 		if(!file_exists($location)) { // Check if the file doesn't exist
 			$data = array();
 			$sql = $this -> query($query); // Run the query
-			while($fetch = $this -> fetch_array()) // Loop through the fetched data
-				$data[] = $fetch;
+			while($fetch = $this -> fetch_assoc()) // Loop through the fetched data
+				array_push($data, $fetch);
 			file_put_contents($location, "<?php die(); ?>\n".serialize($data)); // Create the file
 		} else
 			return false;
@@ -101,7 +107,7 @@ abstract class SQL {
 			$this -> table_cache = $tables;
 		else
 			$this -> table_cache = array_merge($tables, $this -> table_cache); // Merge the table_cache in memory with the new cached query 
-		file_put_contents('./'.CACHE.'/tables.php', "<?php die(); ?>\n".serialize($this -> table_cache)); // Update tables.php
+		file_put_contents(IN_PATH.CACHE.'/tables.php', "<?php die(); ?>\n".serialize($this -> table_cache)); // Update tables.php
 	}
 	
 	public function get_cache($query) {
@@ -109,7 +115,7 @@ abstract class SQL {
 	 	* Grabs the contents of the cached query file
 		* Returns: Array data from the cached query
 		*/
-		$location = './'.CACHE.'/'.md5($query).'.php';
+		$location = IN_PATH.CACHE.'/'.md5($query).'.php';
 		if(@file_exists($location) && @is_readable($location))
 			return unserialize(file_get_contents($location, NULL, NULL, 16));
 		else
@@ -127,11 +133,13 @@ abstract class SQL {
 		if($sql_data === false) {
 			// Unable to read the file, somethings gone wrong
 			$sql = $this -> query($query); // Run the query anyway
+			$data = array();
 			while($fetch = $this -> fetch_array($query)) // Loop through the data
-				$data[] = $fetch;
+				array_push($data, $fetch);
 			$sql_data = $data; // Set the data to return
 			// We do this to prevent any errors from no data being returned
 		}
+		$this -> last_resource = $sql_data;
 		return $sql_data;
 	}
 	public function clear_cache($query = '') {
@@ -142,17 +150,17 @@ abstract class SQL {
 		*/
 		// Reset the tables.php
 		if($query == '') {
-			file_put_contents('./'.CACHE.'/tables.php', "<?php die(); ?>\n");
+			file_put_contents(IN_PATH.CACHE.'/tables.php', "<?php die(); ?>\n");
 			// Remove any cache files
-			$dir = opendir(CACHE.'/');
+			$dir = opendir(IN_PATH.CACHE.'/');
 				while(($file = readdir($dir)) !==false ) {
 					if(strlen($file) == 36 && $file != 'index.php' && $file != 'tables.php')
-						unlink('./'.CACHE.'/'.$file);
+						unlink(IN_PATH.CACHE.'/'.$file);
 				}
 			closedir($dir);
 		} else {
-			if(file_exists('./'.CACHE.'/'.md5($query).'.php'))
-				unlink('./'.CACHE.'/'.md5($query).'.php');
+			if(file_exists(IN_PATH.CACHE.'/'.md5($query).'.php'))
+				unlink(IN_PATH.CACHE.'/'.md5($query).'.php');
 		}
 	}
 }
