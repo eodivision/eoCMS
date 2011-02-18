@@ -67,12 +67,6 @@ class User_Management {
 				return false;
 			}
 			if(sha1($user['salt1'].$password.$user['salt2']) != $user['password']) { //check the password
-				//lets change the salt again for this user
-				$salt1 = call('generate_key', 10);
-				$salt2 = call('generate_key', 10);
-				//salt the password
-				$password = sha1($salt1.$password.$salt2);
-				$sql -> query("UPDATE users SET password = '$password', salt1 = '$salt1', salt2 = '$salt2', WHERE id = '".$user['id']."'");
 				error('Wrong Username or Password');
 				return false;
 			}
