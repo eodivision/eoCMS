@@ -109,6 +109,24 @@ function class_is_loaded($class_name) {
 
 // Load the config containing database connection and other related installation settings
 require(IN_PATH.'config.php');
+// Include the database class
+require_once(IN_PATH.'classes/database/'.$database['type'].'.php');
+// Initialise class
+$db = new $database['type'];
+// Connect
+$db -> connect($database);
+// Unset the database connection info once established link
+unset($database);
+function db() {
+	/**
+	 * Allows usage of db() instead of $db to eliminate the need to global $db.
+	 * For example: db() -> escape() can be used instead of $db -> escape().
+	 * Returns: @Object
+	 */
+	global $db;
+	
+	return $db;
+}
 /** 
  * Encodes HTML within below globals, takes into account magic quotes.
  * Note: $_SERVER is not sanitised, be aware of this when using it.
@@ -119,7 +137,7 @@ if(get_magic_quotes_gpc()) {
 	while(list($k, $v) = each($in)) {
 		foreach($v as $key => $val) {
 			if(!is_array($val)) 
-				$in[$k][$sql -> escape(htmlspecialchars(stripslashes($key), ENT_QUOTES))] = $sql -> escape(htmlspecialchars(stripslashes($val), ENT_QUOTES));
+				$in[$k][db() -> escape(htmlspecialchars(stripslashes($key), ENT_QUOTES))] = db() -> escape(htmlspecialchars(stripslashes($val), ENT_QUOTES));
 			else
 				$in[] =& $in[$k][$key];
 		}
@@ -128,7 +146,7 @@ if(get_magic_quotes_gpc()) {
 	while(list($k, $v) = each($in)) {
 		foreach($v as $key => $val) {
 			if(!is_array($val))
-				$in[$k][$sql -> escape(htmlspecialchars($key, ENT_QUOTES))] = $sql -> escape(htmlspecialchars($val, ENT_QUOTES));
+				$in[$k][db() -> escape(htmlspecialchars($key, ENT_QUOTES))] = db() -> escape(htmlspecialchars($val, ENT_QUOTES));
 			else
 				$in[] =& $in[$k][$key];
 		}
@@ -136,13 +154,14 @@ if(get_magic_quotes_gpc()) {
 }
 
 unset($in);
+
 // Create eocms variable with basic info
 $eocms = array('query_count' => 0);
+
 // Grab the settings and cache them
-$settingsSQL = $sql -> query("SELECT * FROM ".PREFIX."settings", 'cache');
+$settingsSQL = db() -> query("SELECT * FROM ".PREFIX."settings", 'cache');
 foreach($settingSQL as $settingrow)
 	$eocms['settings'][$settingrow['variable']] = $settingrow['value'];
-	
 // Rather than using $eocms we use functions to eliminate the need for globalising variables in many functions, plus it looks neater :D
 function setting($variable, $modify = '') {
 	/**
@@ -151,10 +170,10 @@ function setting($variable, $modify = '') {
 	 * If modify emtpy it returns the setting data from the table
 	 * Returns: Setting data from settings table: @Array
 	 */
-	global $eocms, $sql;
+	global $eocms;
 	
 	if(empty($modify)) {
-		$sql -> query("UPDATE ".PREFIX."settings SET value = '$modify' WHERE variable = '$variable'");
+		db() -> query("UPDATE ".PREFIX."settings SET value = '$modify' WHERE variable = '$variable'");
 		return $modify;
 	} else
 		return (isset($eocms['settings'][$variable]) ? $eocms['settings'][$variable] : '');
@@ -162,21 +181,27 @@ function setting($variable, $modify = '') {
 
 // Start the user class
 $user = new User_Management();
-
-function user($variable, $modify = '') {
+function user($variable = '', $modify = '') {
 	/**
-	 * Modifies $variable column in users table
-	 * with the contents of $modify
+	 * Modifies $variable column in users table with the contents of $modify
 	 * If modify emtpy it returns the user data from the table
-	 * Returns: User data from users table: @String
+	 * If neither $variable or $modify are set, this function can be used instead of $user forthe User_Management class
+	 * Returns: @String or @Object
 	 */
 	global $eocms;
 	
-	if(!empty($modify)) {
-		$sql -> query("UPDATE ".PREFIX."users SET $variable = '$modify' WHERE id = '".$eocms['user']['id']."'");
-		return $modify;
-	} else
-		return (isset($eocms['user'][$variable]) ? $eocms['user'][$variable] : '');
+	if(empty($variable) && empty($modify)) {
+		// We assume it is a class call
+		global $user;
+		
+		return $user;
+	} else {
+		if(!empty($modify)) {
+			db() -> query("UPDATE ".PREFIX."users SET $variable = '$modify' WHERE id = '".$eocms['user']['id']."'");
+			return $modify;
+		} else
+			return (isset($eocms['user'][$variable]) ? $eocms['user'][$variable] : '');
+	}
 }
 
 // Error functions
@@ -218,6 +243,7 @@ else {
     error_reporting(0);
     @ini_set('display_errors', 0); // Fallback incase error_reporting(0) fails
 }
+
 // Below provides an optional addition to links to prevent other users from creating dangerous links which the user may accidently click
 if(!user('guest'))
 	define('AUTHID', substr(user('pass'), 10, 32));

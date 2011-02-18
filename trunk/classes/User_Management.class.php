@@ -15,7 +15,7 @@ class User_Management {
 		 * Handles login and populates $eocms['user'] variable
 		 * Returns: @Void
 		 */
-		global $eocms, $sql;
+		global $eocms;
 		
 		// Set them as guest by default
 		$eocms['user']['guest'] = 1;
@@ -27,7 +27,7 @@ class User_Management {
 			setcookie(COOKIE_NAME, '', time()-(60*60*24*100), '', $domain); // Delete the cookie
 		} elseif(isset($_COOKIE[LOGIN_COOKIE])) {
 			// Genuine cookie, lets check the system
-			$sql -> query("SELECT permissions.variable AS variable, permissions.value AS value FROM ".PREFIX."membergroups LEFT JOIN ".PREFIX."users ON ".PREFIX."membergroups.membergroup_id = ".PREFIX."users.membergroup LEFT JOIN ".PREFIX."permissions ON ".PREFIX."permissions.membergroup_id = ".PREFIX."membergroups.membergroup_id WHERE ".PREFIX."users.ssid = '".$_COOKIE[COOKIE_NAME]."' AND ".PREFIX."permissions.membergroup_id = membergroup");
+			db() -> query("SELECT permissions.variable AS variable, permissions.value AS value FROM ".PREFIX."membergroups LEFT JOIN ".PREFIX."users ON ".PREFIX."membergroups.membergroup_id = ".PREFIX."users.membergroup LEFT JOIN ".PREFIX."permissions ON ".PREFIX."permissions.membergroup_id = ".PREFIX."membergroups.membergroup_id WHERE ".PREFIX."users.ssid = '".$_COOKIE[COOKIE_NAME]."' AND ".PREFIX."permissions.membergroup_id = membergroup");
 			// Yes above looks big query but it only runs if there is a cookie found, and stops the need for more than one query to log them in (i.e. set permissions etc)
 			if($sql -> num_rows() != 0) {
 				while($userrow = $sql -> fetch_array())
@@ -38,7 +38,7 @@ class User_Management {
 		else {
 			// No cookie found meaning they are just a guest
 			$eocms['user']['membergroup'] = 1; // Set their membergroup to guest
-			$guestSQL = $sql -> query("SELECT * FROM ".PREFIX."permissions WHERE membergroup_id = '1'", 'cache'); // Cache this query as it will be run very often
+			$guestSQL = db() -> query("SELECT * FROM ".PREFIX."permissions WHERE membergroup_id = '1'", 'cache'); // Cache this query as it will be run very often
 			foreach($guestSQL as $guest)
 				$eocms['user'][$guest['variable']] = $guest['value'];
 		}
@@ -50,14 +50,13 @@ class User_Management {
 		 * Updates relative database info such as last logged in
 		 * Returns: @Boolean
 		 */
-		global $sql;
-		
-		$sql -> query("SELECT * FROM users WHERE username = '$username'");
-		if($sql -> num_rows() == 0) { // The username doesn't exist
+		 		
+		$sql -> query("SELECT * FROM ".PREFIX."users WHERE username = '$username'");
+		if(db() -> num_rows() == 0) { // The username doesn't exist
 			error('Wrong Username or Password'); // Dont tell them which was wrong, makes things harder for any hackers
 			return false;
 		} else {
-			$user = $sql -> fetch_array();
+			$user = db() -> fetch_array();
 			if($user['disabled'] == 1) { //oh dear, they are not allowed to login.... PWNED
 				error('Your account has been disabled');
 				return false;
@@ -82,10 +81,10 @@ class User_Management {
 				$salt2 = random_string(10);
 				// Salt the password
 				$password = sha1($salt1.$password.$salt2);
-				// Update there IP, last login and Session ID (ssid)
-				$loginSQL = $sql -> query("UPDATE users SET ssid = '$ssid', password = '$password', salt1 = '$salt1', salt2 = '$salt2', last_login = '".time()."', ip = '".call('visitor_ip')."', useragent = '".$sql -> escape(htmlspecialchars($_SERVER['HTTP_USER_AGENT'], ENT_QUOTES))."' WHERE id = '".$user['id']."'");
+				// Update their IP, last login and Session ID (ssid)
+				$loginSQL = db() -> query("UPDATE ".PREFIX."users SET ssid = '$ssid', password = '$password', salt1 = '$salt1', salt2 = '$salt2', last_login = '".time()."', ip = '".call('visitor_ip')."', useragent = '".db() -> escape(htmlspecialchars($_SERVER['HTTP_USER_AGENT'], ENT_QUOTES))."' WHERE id = '".$user['id']."'");
 				// Remove their IP from the user's online so it does not say they are a guest any more in the users online panel
-				$sql -> query("DELETE FROM user_online WHERE ip = '".$this -> ip()."'");
+				db() -> query("DELETE FROM user_online WHERE ip = '".$this -> ip()."'");
 				$domain = ($_SERVER['HTTP_HOST'] != 'localhost') ? $_SERVER['HTTP_HOST'] : false;
 				// Check if they want to be remembered
 				if($remember)
@@ -106,11 +105,11 @@ class User_Management {
 		 * Removes them from the online list
 		 * Returns: @Boolean
 		 */
-		global $eocms, $sql;
+		global $eocms;
 		
 		if(isset($_COOKIE[COOKIE_NAME])) {
 			//remove them from the users online list so they arent still noted as online
-			$sql ->query("DELETE FROM ".PREFIX."user_online WHERE user_id = '".user('id')."'");
+			db() -> query("DELETE FROM ".PREFIX."user_online WHERE user_id = '".user('id')."'");
 			$domain = ($_SERVER['HTTP_HOST'] != 'localhost') ? $_SERVER['HTTP_HOST'] : false;
 			//delete the cookie so they wont be logged back in again by mistake
 			setcookie(COOKIE_NAME, '', time() - (60 * 60 * 24 * 100), '', $domain);
@@ -118,7 +117,7 @@ class User_Management {
 			unset($eocms['user']);
 			// Below is effectivley same as this class construct but for guests only
 			$eocms['user']['membergroup'] = 1; // Set their membergroup to guest
-			$guestSQL = $sql -> query("SELECT * FROM ".PREFIX."permissions WHERE membergroup_id = '1'", 'cache');
+			$guestSQL = db() -> query("SELECT * FROM ".PREFIX."permissions WHERE membergroup_id = '1'", 'cache');
 			foreach($guestSQL as $guest)
 				$eocms['user'][$guest['variable']] = $guest['value'];
 			return true;
