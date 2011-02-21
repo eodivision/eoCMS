@@ -109,12 +109,13 @@ function class_is_loaded($class_name) {
 
 // Load the config containing database connection and other related installation settings
 require(IN_PATH.'config.php');
+$eocms['query_count'] = 0;
 // Include the database class
 require_once(IN_PATH.'classes/database/'.$database['type'].'.php');
 // Initialise class
-$db = new $database['type'];
+$eocms['classes']['db'] = new $database['type'];
 // Connect
-$db -> connect($database);
+$eocms['classes']['db'] -> connect($database);
 // Unset the database connection info once established link
 unset($database);
 function db() {
@@ -123,9 +124,9 @@ function db() {
 	 * For example: db() -> escape() can be used instead of $db -> escape().
 	 * Returns: @Object
 	 */
-	global $db;
+	global $eocms;
 	
-	return $db;
+	return $eocms['classes']['db'];
 }
 /** 
  * Encodes HTML within below globals, takes into account magic quotes.
@@ -155,9 +156,6 @@ if(get_magic_quotes_gpc()) {
 
 unset($in);
 
-// Create eocms variable with basic info
-$eocms = array('query_count' => 0);
-
 // Grab the settings and cache them
 $settingsSQL = db() -> query("SELECT * FROM ".PREFIX."settings", 'cache');
 foreach($settingsSQL as $settingRow)
@@ -180,7 +178,7 @@ function setting($variable, $modify = '') {
 }
 
 // Start the user class
-$user = new User_Management();
+$eocms['classes']['user'] = new User_Management();
 function user($variable = '', $modify = '') {
 	/**
 	 * Modifies $variable column in users table with the contents of $modify
@@ -191,10 +189,8 @@ function user($variable = '', $modify = '') {
 	global $eocms;
 	
 	if(empty($variable) && empty($modify)) {
-		// We assume it is a class call
-		global $user;
-		
-		return $user;
+		// We assume it is a class call		
+		return $eocms['classes']['user'];
 	} else {
 		if(!empty($modify)) {
 			db() -> query("UPDATE ".PREFIX."users SET $variable = '$modify' WHERE id = '".$eocms['user']['id']."'");
