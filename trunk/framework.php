@@ -160,8 +160,8 @@ $eocms = array('query_count' => 0);
 
 // Grab the settings and cache them
 $settingsSQL = db() -> query("SELECT * FROM ".PREFIX."settings", 'cache');
-foreach($settingSQL as $settingrow)
-	$eocms['settings'][$settingrow['variable']] = $settingrow['value'];
+foreach($settingsSQL as $settingRow)
+	$eocms['settings'][$settingRow['variable']] = ($settingRow['value'] == 'true' ? true : ($settingRow['value'] == 'false' ? false : $settingRow['value']));
 // Rather than using $eocms we use functions to eliminate the need for globalising variables in many functions, plus it looks neater :D
 function setting($variable, $modify = '') {
 	/**
