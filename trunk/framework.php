@@ -120,8 +120,8 @@ $eocms['classes']['db'] -> connect($database);
 unset($database);
 function db() {
 	/**
-	 * Allows usage of db() instead of $db to eliminate the need to global $db.
-	 * For example: db() -> escape() can be used instead of $db -> escape().
+	 * Allows usage of db() instead of $eocms['classes']['db'] to eliminate the need to global $eocs.
+	 * For example: db() -> escape() can be used instead of $eocms['classes']['db'] -> escape().
 	 * Returns: @Object
 	 */
 	global $eocms;
@@ -183,7 +183,7 @@ function user($variable = '', $modify = '') {
 	/**
 	 * Modifies $variable column in users table with the contents of $modify
 	 * If modify emtpy it returns the user data from the table
-	 * If neither $variable or $modify are set, this function can be used instead of $user forthe User_Management class
+	 * If neither $variable or $modify are set, this function can be used instead of $eocms['classes']['user'] for the User_Management class
 	 * Returns: @String or @Object
 	 */
 	global $eocms;
