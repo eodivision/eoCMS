@@ -12,9 +12,9 @@
 abstract class SQL {
 	var $last_resource;
 	var $table_cache;
+	var $query_count;
 	function __construct() {
-		global $eocms;
-		$eocms['query_count'] = 0;
+		$this -> query_count = 0;
 		$this -> table_cache = file_get_contents(IN_PATH.CACHE.'/tables.php', NULL, NULL, 16);
 		if(!empty($this -> table_cache))
 			$this -> table_cache = unserialize($this -> table_cache);

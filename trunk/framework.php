@@ -109,7 +109,6 @@ function class_is_loaded($class_name) {
 
 // Load the config containing database connection and other related installation settings
 require(IN_PATH.'config.php');
-$eocms['query_count'] = 0;
 // Include the database class
 require_once(IN_PATH.'classes/database/'.$database['type'].'.php');
 // Initialise class

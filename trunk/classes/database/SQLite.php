@@ -25,9 +25,8 @@ class SQLite extends SQL {
 	public function query($query, $cache = '') {
 		self::cache_check($query);
 		if(empty($cache)) {
-			global $eocms;
 			$this->last_resource = sqlite_query($this -> connection, $query);
-			++$eocms['query_count'];
+			++$this -> query_count;
 			return $this->last_resoruce;
 		} else
 			return self::cache($query);
